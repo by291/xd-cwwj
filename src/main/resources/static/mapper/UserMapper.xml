@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="fun.by291.xdcwwj.mapper.UserMapper">
+
+    <insert id="addUser" parameterType="fun.by291.xdcwwj.model.entity.User">
+        insert into cwwj.user(username, password, email)
+        values (#{username}, #{password}, #{email})
+    </insert>
+
+    <select id="getUsers" resultType="fun.by291.xdcwwj.model.entity.User">
+        select id, username, password, email, enable_user, enable_email
+        from cwwj.user
+    </select>
+
+    <select id="getUsersWithoutPassword" resultType="fun.by291.xdcwwj.model.entity.User">
+        select id, username, email, enable_user, enable_email
+        from cwwj.user
+    </select>
+
+    <update id="updateUser">
+        update cwwj.user
+        <set>
+            <if test="user.username != null">username = #{user.username},</if>
+            <if test="user.password != null">`password` = #{user.password},</if>
+            <if test="user.enableUser != null">enable_user = #{user.enableUser},</if>
+            <if test="user.enableEmail != null">`enable_email` = #{user.enableEmail},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateUserStatus">
+        update cwwj.user
+        set enable_user=#{status}
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateEmailStatus">
+        update cwwj.user
+        set enable_email=#{status}
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>
