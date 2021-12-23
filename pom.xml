@@ -13,7 +13,7 @@
 
     <groupId>fun.by291</groupId>
     <artifactId>xd-cwwj</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>xd-cwwj</name>
     <description>西电晨午晚检自动打卡</description>
