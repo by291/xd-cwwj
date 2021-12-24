@@ -16,6 +16,7 @@
         select count(*)
         from cwwj.user
         where username = #{username}
+        limit 1
     </select>
 
     <select id="getUsersWithoutPassword" resultType="fun.by291.xdcwwj.model.entity.User">

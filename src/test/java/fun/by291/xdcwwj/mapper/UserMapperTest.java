@@ -13,6 +13,6 @@ public class UserMapperTest {
 
     @Test
     public void countUserByUsername() {
-        System.out.println(mapper.countUserByUsername("1"));
+        System.out.println(mapper.countUserByUsername("21009201109"));
     }
 }
