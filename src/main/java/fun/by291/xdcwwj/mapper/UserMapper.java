@@ -13,6 +13,8 @@ public interface UserMapper {
 
     List<User> getUsers();
 
+    int countUserByUsername(String username);
+
     List<User> getUsersWithoutPassword();
 
     int updateUser(@Param("id") int id, @Param("user") User user);

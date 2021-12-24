@@ -46,11 +46,6 @@ public class UserController {
             return ResponseUtil.success(null);
         } catch (RegisterException e) {
             return ResponseUtil.fail(ResponseCode.CODE_BAD_REQUEST, e.getMessage());
-        } catch (DataAccessException e) {
-            if (e instanceof DataIntegrityViolationException) {
-                return ResponseUtil.success(null);
-            }
-            return ResponseUtil.fail(ResponseCode.CODE_INTERNAL_ERROR, e.getMessage());
         }
     }
 

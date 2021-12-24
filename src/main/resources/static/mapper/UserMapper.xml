@@ -12,6 +12,12 @@
         from cwwj.user
     </select>
 
+    <select id="countUserByUsername" resultType="java.lang.Integer">
+        select count(*)
+        from cwwj.user
+        where username = #{username}
+    </select>
+
     <select id="getUsersWithoutPassword" resultType="fun.by291.xdcwwj.model.entity.User">
         select id, username, email, enable_user, enable_email
         from cwwj.user
