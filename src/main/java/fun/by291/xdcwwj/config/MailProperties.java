@@ -8,9 +8,10 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "mail")
 public class MailProperties {
-    private String author;
 
     private String host;
+
+    private int port;
 
     private String sender;
 
@@ -18,5 +19,9 @@ public class MailProperties {
 
     private String subject;
 
-    private String content;
+    private String successContent;
+
+    private String failContent;
+
+    private String errorPasswordContent;
 }

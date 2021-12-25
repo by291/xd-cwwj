@@ -10,22 +10,35 @@ import org.springframework.stereotype.Component;
 @Component
 public class MailTemplate {
     @Autowired
-    private MailProperties mailProperties;
+    private MailProperties properties;
 
-    public Email getBasicEmail() throws EmailException {
-        SimpleEmail email = new SimpleEmail();
-        // 关闭 Debug 模式
-        email.setDebug(false);
-        // 开启 SSL 加密
+    public Email getBasicMail(MailType type) throws EmailException {
+        Email email = new SimpleEmail();
+        email.setHostName(properties.getHost());
+        email.setSmtpPort(properties.getPort());
         email.setSSLOnConnect(true);
-        // 设置服务器地址
-        email.setHostName(mailProperties.getHost());
-        // 设置字符编码
         email.setCharset("UTF-8");
-        // 设置发送者
-        email.setFrom(mailProperties.getSender());
-        // 设置发件验证
-        email.setAuthentication(mailProperties.getSender(), mailProperties.getPassword());
+        email.setAuthentication(properties.getSender(), properties.getPassword());
+        email.setFrom(properties.getSender());
+        email.setSubject(properties.getSubject());
+        email.setMsg(getContentFromType(type));
         return email;
+    }
+
+    private String getContentFromType(MailType type) {
+        if (type == MailType.SUCCESS) return properties.getSuccessContent();
+        else if (type == MailType.FAIL) return properties.getFailContent();
+        else if (type == MailType.ERROR_PASSWORD) return properties.getErrorPasswordContent();
+
+        return null;
+    }
+
+
+    public enum MailType {
+        SUCCESS,
+
+        FAIL,
+
+        ERROR_PASSWORD,
     }
 }
