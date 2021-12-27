@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SubmitHttpTemplate {
+public class SubmitHttpRequests {
     private static final String LOGIN_URL = "https://xxcapp.xidian.edu.cn/uc/wap/login/check";
     private static final String SUBMIT_URL = "https://xxcapp.xidian.edu.cn/xisuncov/wap/open-report/save";
 

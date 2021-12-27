@@ -12,6 +12,7 @@ import fun.by291.xdcwwj.util.ResponseUtil;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -78,13 +79,19 @@ public class UserController {
 
     @PatchMapping("/email/disable")
     public BaseResponse<String> disableEmails(@RequestBody IdsForm idsForm) {
-        service.updateUserStatus(idsForm.getIds(), 0);
+        service.updateEmailStatus(idsForm.getIds(), 0);
         return ResponseUtil.success(null);
     }
 
     @PatchMapping("/email/enable")
     public BaseResponse<String> enableEmails(@RequestBody IdsForm idsForm) {
-        service.updateUserStatus(idsForm.getIds(), 1);
+        service.updateEmailStatus(idsForm.getIds(), 1);
+        return ResponseUtil.success(null);
+    }
+
+    @DeleteMapping
+    public BaseResponse<String> deleteUser(@RequestBody IdsForm idsForm) {
+        service.deleteUsers(idsForm.getIds());
         return ResponseUtil.success(null);
     }
 }

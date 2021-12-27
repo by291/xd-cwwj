@@ -22,6 +22,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public BaseResponse<String> handleException(Exception e) {
         LOGGER.debug(e.getMessage());
-        return ResponseUtil.fail(500, e.getMessage());
+        return ResponseUtil.fail(ResponseCode.CODE_INTERNAL_ERROR, e.getMessage());
     }
 }

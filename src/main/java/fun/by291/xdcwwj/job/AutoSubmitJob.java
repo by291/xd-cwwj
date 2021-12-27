@@ -2,7 +2,7 @@ package fun.by291.xdcwwj.job;
 
 import fun.by291.xdcwwj.base.BaseResult;
 import fun.by291.xdcwwj.component.MailTemplate;
-import fun.by291.xdcwwj.component.SubmitHttpTemplate;
+import fun.by291.xdcwwj.component.SubmitHttpRequests;
 import fun.by291.xdcwwj.mapper.UserMapper;
 import fun.by291.xdcwwj.model.entity.User;
 import java.util.List;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AutoSubmitJob {
     @Autowired
-    private SubmitHttpTemplate submitHttp;
+    private SubmitHttpRequests submitHttpRequests;
     @Autowired
     private UserMapper mapper;
     @Autowired
@@ -33,29 +33,35 @@ public class AutoSubmitJob {
             // 用户邮件提醒是否开启
             boolean isEmailEnabled = user.getEmail() != null && user.getEnableEmail() == 1;
 
-            BaseResult result = submitHttp.login(user);
+            BaseResult result = submitHttpRequests.login(user);
             if (!"0".equals(result.getE())) {
-                // 密码错误提醒
                 if ("1".equals(result.getE()) && isEmailEnabled) {
+                    // 密码错误提醒
                     errorPasswordEmail.addTo(user.getEmail());
                 }
                 continue;
             }
-            result = submitHttp.submit();
+            result = submitHttpRequests.submit();
             if (("0".equals(result.getE()) || "1".equals(result.getE()))) {
                 if (isEmailEnabled) {
                     // 上报成功提醒
                     successEmail.addTo(user.getEmail());
                 }
             } else {
-                // 上报失败提醒
                 if (isEmailEnabled) {
+                    // 上报失败提醒
                     failEmail.addTo(user.getEmail());
                 }
             }
         }
-        if (!successEmail.getToAddresses().isEmpty()) successEmail.send();
-        if (!failEmail.getToAddresses().isEmpty()) failEmail.send();
-        if (!errorPasswordEmail.getToAddresses().isEmpty()) errorPasswordEmail.send();
+        if (!successEmail.getToAddresses().isEmpty()) {
+            successEmail.send();
+        }
+        if (!failEmail.getToAddresses().isEmpty()) {
+            failEmail.send();
+        }
+        if (!errorPasswordEmail.getToAddresses().isEmpty()) {
+            errorPasswordEmail.send();
+        }
     }
 }

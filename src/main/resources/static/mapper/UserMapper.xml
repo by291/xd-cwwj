@@ -52,4 +52,13 @@
             #{id}
         </foreach>
     </update>
+
+    <delete id="deleteUser">
+        delete
+        from cwwj.user
+        where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>

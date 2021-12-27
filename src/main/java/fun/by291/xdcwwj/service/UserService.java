@@ -1,7 +1,7 @@
 package fun.by291.xdcwwj.service;
 
 import fun.by291.xdcwwj.base.BaseResult;
-import fun.by291.xdcwwj.component.SubmitHttpTemplate;
+import fun.by291.xdcwwj.component.SubmitHttpRequests;
 import fun.by291.xdcwwj.exception.RegisterException;
 import fun.by291.xdcwwj.mapper.UserMapper;
 import fun.by291.xdcwwj.model.entity.User;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
     @Autowired
-    private SubmitHttpTemplate submitHttpTemplate;
+    private SubmitHttpRequests submitHttpRequests;
     @Autowired
     private UserMapper mapper;
 
@@ -31,7 +31,7 @@ public class UserService {
         // 判断用户是否已注册
         int count = mapper.countUserByUsername(user.getUsername());
         if (count == 1) throw new RegisterException("用户已注册，请勿重复注册");
-        BaseResult result = submitHttpTemplate.login(user);
+        BaseResult result = submitHttpRequests.login(user);
         if (!"0".equals(result.getE())) throw new RegisterException("用户名或密码错误");
         mapper.addUser(user);
     }
@@ -73,5 +73,9 @@ public class UserService {
      */
     public void updateEmailStatus(Integer[] ids, Integer status) {
         mapper.updateEmailStatus(ids, status);
+    }
+
+    public void deleteUsers(Integer[] ids) {
+        mapper.deleteUser(ids);
     }
 }

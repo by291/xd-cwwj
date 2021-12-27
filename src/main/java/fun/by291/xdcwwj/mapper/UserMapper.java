@@ -22,4 +22,6 @@ public interface UserMapper {
     int updateUserStatus(@Param("ids") Integer[] ids, @Param("status") Integer status);
 
     int updateEmailStatus(@Param("ids") Integer[] ids, @Param("status") Integer status);
+
+    int deleteUser(Integer[] ids);
 }
